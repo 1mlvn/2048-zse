@@ -269,7 +269,7 @@ function App() {
 
     return true;
   };
-}
+
   // Reset
   const resetGame = () => {
     setGameOver(false);
@@ -318,4 +318,174 @@ function App() {
 
   useEvent("keydown", handleKeyDown);
 
+
+  return (
+    <div className="App">
+      <div
+        style={{
+          width: 345,
+          margin: "auto",
+          marginTop: 30,
+        }}
+      >
+        <div style={{ display: "flex" }}>
+          <div
+            style={{
+              fontFamily: "sans-serif",
+              flex: 1,
+              fontWeight: "700",
+              fontSize: 60,
+              color: "#FF00FF",
+            }}
+          >
+            2048
+          </div>
+          <div
+            style={{
+              flex: 1,
+              marginTop: "auto",
+            }}
+          >
+            <div onClick={resetGame} style={style.newGameButton}>
+              NOWA GRA
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            background: "#6E0DD0",
+            width: "max-content",
+            height: "max-content",
+            margin: "auto",
+            padding: 5,
+            borderRadius: 5,
+            marginTop: 10,
+            position: "relative",
+          }}
+        >
+          {gameOver && (
+            <div style={style.gameOverOverlay}>
+              <div>
+                <div
+                  style={{
+                    fontSize: 30,
+                    fontFamily: "sans-serif",
+                    fontWeight: "900",
+                    color: "black",
+                  }}
+                >
+                  Game Over
+                </div>
+                <div>
+                  <div
+                    style={{
+                      flex: 1,
+                      marginTop: "auto",
+                    }}
+                  >
+                    <div onClick={resetGame} style={style.tryAgainButton}>
+                      Spróbuj Ponownie
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <Swipe
+            onSwipeDown={() => {
+              swipeDown();
+            }}
+            onSwipeLeft={() => swipeLeft()}
+            onSwipeRight={() => swipeRight()}
+            onSwipeUp={() => swipeUp()}
+            style={{ overflowY: "hidden" }}
+          >
+            {data.map((row, oneIndex) => {
+              return (
+                <div style={{ display: "flex" }} key={oneIndex}>
+                  {row.map((digit, index) => (
+                    <Block num={digit} key={index} />
+                  ))}
+                </div>
+              );
+            })}
+          </Swipe>
+        </div>
+
+        <div style={{ width: "inherit" }}>
+          <p class="game-explanation">
+            <strong class="important">Jak grać:</strong> Użyj{" "}
+            <strong>strzałek na klawiaturze</strong> żeby przesuwać płytki. Kiedy dwie płytki o tej samej wartości
+            się ze sobą dotkną, <strong>zsumują się ze sobą!</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const Block = ({ num }) => {
+  const { blockStyle } = style;
+
+  return (
+    <div
+      style={{
+        ...blockStyle,
+        background: getColors(num),
+        color: num === 2 || num === 4 ? "white" : "white",
+      }}
+    >
+      {num !== 0 ? num : ""}
+    </div>
+  );
+};
+
+const style = {
+  blockStyle: {
+    height: 80,
+    width: 80,
+    background: "#FF0099",
+    margin: 3,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 45,
+    fontWeight: "800",
+    color: "white",
+  },
+  newGameButton: {
+    padding: 10,
+    background: "#FF0099",
+    color: "#F8F5F0",
+    width: 95,
+    borderRadius: 7,
+    fontWeight: "900",
+    marginLeft: "auto",
+    marginBottom: "auto",
+    cursor: "pointer",
+  },
+  tryAgainButton: {
+    padding: 10,
+    background: "black",
+    color: "#F8F5F0",
+    width: 150,
+    borderRadius: 7,
+    fontWeight: "900",
+    cursor: "pointer",
+    margin: "auto",
+    marginTop: 20,
+  },
+  gameOverOverlay: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    left: 0,
+    top: 0,
+    borderRadius: 5,
+    background: "rgba(238,228,218,.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+}
 export default App;
