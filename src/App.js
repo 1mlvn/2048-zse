@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import cloneDeep from "lodash.clonedeep";
 import { useEvent, getColors } from "./util";
+import Swipe from "react-easy-swipe";
 
 function App() {
   const UP_ARROW = 38;
@@ -487,5 +488,5 @@ const style = {
     justifyContent: "center",
     alignItems: "center",
   },
-}
+};
 export default App;
