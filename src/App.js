@@ -270,5 +270,52 @@ function App() {
     return true;
   };
 }
+  // Reset
+  const resetGame = () => {
+    setGameOver(false);
+    const emptyGrid = [
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+      [0, 0, 0, 0],
+    ];
+
+    addNumber(emptyGrid);
+    addNumber(emptyGrid);
+    setData(emptyGrid);
+  };
+
+  const handleKeyDown = (event) => {
+    if (gameOver) {
+      return;
+    }
+    switch (event.keyCode) {
+      case UP_ARROW:
+        swipeUp();
+        break;
+      case DOWN_ARROW:
+        swipeDown();
+        break;
+      case LEFT_ARROW:
+        swipeLeft();
+        break;
+      case RIGHT_ARROW:
+        swipeRight();
+        break;
+      default:
+        break;
+    }
+
+    let gameOverr = checkIfGameOver();
+    if (gameOverr) {
+      setGameOver(true);
+    }
+  };
+
+  useEffect(() => {
+    initialize();
+  }, []);
+
+  useEvent("keydown", handleKeyDown);
 
 export default App;
